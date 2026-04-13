@@ -25,8 +25,17 @@ export default async function handler(req, res) {
 
     const data = await response.json();
 
+    // 🔥 ADD THIS (VERY IMPORTANT)
+    console.log("HubSpot response:", data);
+
+    // ❗ handle errors properly
+    if (!response.ok) {
+      return res.status(response.status).json(data);
+    }
+
     res.status(200).json(data);
   } catch (error) {
+    console.error("Server error:", error);
     res.status(500).json({ error: "Failed to send data" });
   }
 }
